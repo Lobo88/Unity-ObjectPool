@@ -8,7 +8,7 @@ public class ObjectPool : MonoBehaviour
     public List<GameObject> pooleObjects;
     public GameObject objectToPool;
     public int amountToPool;
-
+    public bool shouldExpand = true;
     private void Awake()
     {
         SharedInstance = this;
@@ -35,6 +35,17 @@ public class ObjectPool : MonoBehaviour
                 return pooleObjects[i];
             }
         }
-        return null;
+        if (shouldExpand)
+        {
+            GameObject obj = (GameObject)Instantiate(objectToPool);
+            obj.SetActive(false);
+            pooleObjects.Add(obj);
+            return obj;
+        }
+        else
+        {
+            return null;
+        }
+
     }
 }
